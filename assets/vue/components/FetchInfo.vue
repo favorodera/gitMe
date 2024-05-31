@@ -6,8 +6,10 @@ const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
 const BIO_DATA = ref(null)
 const REPOS_DATA = ref(null)
+const FETCH_STATE = ref('Input A Valid Github Username')
 
 const fetchGithubInformation = async () => {
+  FETCH_STATE.value = 'Fetching Github Info'
   try {
     const requests = [
       axios.get(`${API_URL.value}/${USER.value}`),
@@ -17,7 +19,7 @@ const fetchGithubInformation = async () => {
     const responses = await Promise.all(requests)
     BIO_DATA.value = responses[0].data
     REPOS_DATA.value = responses[1].data
-
+    FETCH_STATE.value = 'Github Info Fetched'
     console.log(BIO_DATA, REPOS_DATA)
   } catch (error) {
     console.log(error)
@@ -26,45 +28,66 @@ const fetchGithubInformation = async () => {
 </script>
 
 <template>
-  <section class="left-tabs-container">
+  <section class="left-tabs-container" v-if="FETCH_STATE === 'Github Info Fetched'">
     <div class="profile-header-tab">
-      <div class="profile-image-container"><img src="../../icons/profilePicture.jpg" alt="" /></div>
-      <p class="name">Favour Emeka</p>
-      <p class="bio">Developer</p>
+      <div class="profile-image-container"><img :src="BIO_DATA.avatar_url" alt="" /></div>
+      <p class="name">{{ BIO_DATA.name }}</p>
+      <p class="bio">{{ BIO_DATA.bio }}</p>
       <div class="follows">
-        <p class="followers">Followers: 100</p>
-        <p class="following">Following: 100</p>
+        <p class="followers">Followers: {{ BIO_DATA.followers }}</p>
+        <p class="following">Following: {{ BIO_DATA.following }}</p>
       </div>
     </div>
 
     <div class="more-info-tab">
-      <div class="location"></div>
-      <div class="company"></div>
-      <div class="twitter"></div>
-      <div class="email"></div>
-      <div class="github"></div>
-      <div class="website"></div>
+      <div class="location" id="more-info-item">
+        <img src="../../icons/location.svg" alt="" v-show="BIO_DATA.location !== null" />
+        <p>{{ BIO_DATA.location }}</p>
+      </div>
+      <div class="company" id="more-info-item" v-show="BIO_DATA.company !== null">
+        <img src="../../icons/briefcase.svg" alt="" />
+        <p>{{ BIO_DATA.company }}</p>
+      </div>
+      <div class="twitter" id="more-info-item" v-show="BIO_DATA.twitter_username !== null">
+        <img src="../../icons/twitter.svg" alt="" />
+        <a
+          :href="`twitter.com/${BIO_DATA.twitter_username}`"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{ BIO_DATA.twitter_username }}</a
+        >
+      </div>
+      <div class="email" id="more-info-item" v-show="BIO_DATA.email !== null">
+        <img src="../../icons/email.svg" alt="" />
+        <a :href="`mailto:${BIO_DATA.email}`" target="_blank" rel="noopener noreferrer">{{
+          BIO_DATA.email
+        }}</a>
+      </div>
+      <div class="github" id="more-info-item">
+        <img src="../../icons/github.svg" alt="" />
+        <a :href="`${BIO_DATA.html_url}`" target="_blank" rel="noopener noreferrer">{{
+          BIO_DATA.html_url
+        }}</a>
+      </div>
+      <div class="website" id="more-info-item" v-show="BIO_DATA.blog !== ''">
+        <img src="../../icons/website.svg" alt="" />
+        <a :href="`${BIO_DATA.blog}`" target="_blank" rel="noopener noreferrer">{{
+          BIO_DATA.blog
+        }}</a>
+      </div>
     </div>
 
     <div class="technologies-tab">
-      <p class="technologies-tab-header">Technologies</p>
-      <div class="technologies">
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-        <p class="technology">HTML</p>
-      </div>
+      <img
+        :src="`https://github-readme-stats.vercel.app/api/top-langs?username=${BIO_DATA.login}&theme=material-palenight&hide_title=false&langs_count=5&hide_border=true&custom_title=Technologies`"
+        alt=""
+      />
     </div>
   </section>
 
-  <!-- <section class="right-tabs-container">
+  <section v-else>v</section>
+
+  <section class="right-tabs-container">
     <form method="get" @submit.prevent="fetchGithubInformation">
       <input type="text" name="" id="" v-model="USER" />
     </form>
@@ -72,5 +95,5 @@ const fetchGithubInformation = async () => {
     <div class="repositories">
       <div class="repository"></div>
     </div>
-  </section> -->
+  </section>
 </template>

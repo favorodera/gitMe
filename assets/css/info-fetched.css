@@ -1,5 +1,5 @@
 .left-tabs-container {
-  width: 21.75rem;
+  max-width: 21.75rem;
   display: flex;
   flex-direction: column;
   gap: 1.875rem;
@@ -42,6 +42,7 @@
   font-size: 0.8125rem;
   font-weight: 300;
   word-break: break-all;
+  text-align: center;
 }
 
 .follows {
@@ -62,14 +63,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: space-evenly;
+  gap: 1.25rem;
   padding: 0.5rem;
+}
+
+#more-info-item {
+  display: flex;
+  width: 100%;
+  display: flex;
+  gap: 1.25rem;
 }
 
 .technologies-tab {
   width: 100%;
-  min-height: 13rem;
+  min-height: min-content;
   border: none;
   border-radius: 1.25rem;
   background-color: #302f3d;
@@ -77,21 +85,11 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding: 0.5rem;
-}
-.technologies-tab-header {
-  font-size: 1.23rem;
-  font-weight: 700;
-  margin-left: 0.75rem;
-}
 
-.technologies {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.94rem;
+  img {
+    border-radius: 1.25rem;
+    width: 100%;
+  }
 }
 
 .technology {
