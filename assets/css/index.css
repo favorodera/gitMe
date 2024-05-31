@@ -33,4 +33,9 @@ body {
   max-width: 90rem;
   height: 100%;
   padding: 2.5rem 2.5rem 0rem 2.5rem ;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap-reverse;
 }
+
+

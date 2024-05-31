@@ -4,7 +4,6 @@ import FetchInfo from './components/FetchInfo.vue'
 
 <template>
   <main class="main-container">
-    hello
     <FetchInfo />
   </main>
 </template>
