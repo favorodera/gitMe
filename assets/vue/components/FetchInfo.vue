@@ -89,7 +89,7 @@ const fetchGithubInformation = async () => {
 
   <section class="right-tabs-container">
     <form method="get" @submit.prevent="fetchGithubInformation">
-      <input type="text" name="" id="" v-model="USER" />
+      <input type="text" name="username-input" id="username-input" v-model="USER" />
     </form>
 
     <div class="repositories">
