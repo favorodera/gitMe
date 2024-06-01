@@ -1,18 +1,23 @@
-@media only screen and (min-width: 724px) {
-    .main-tabs-container {
-        flex-wrap: nowrap;
-    }
+@media only screen and (min-width: 750px) {
+  .main-tabs-container {
+    flex-wrap: nowrap;
+    height: 60rem;
+  }
 
-    .left-tabs-container {
-        max-width: 21.75rem;
-    }
+  .left-tabs-container {
+    max-width: 21.75rem;
+  }
 
-    .right-tabs-container {
-        width: 59.5rem;
-        flex-grow: 1;
-    }
-    
-    .repository {
-        width: 28.8125rem;
-    }
+  .right-tabs-container {
+    width: 59.5rem;
+    flex-grow: 1;
+  }
+  .repositories {
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .repository {
+    width: 28.8125rem;
+  }
 }

@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import index from '../vue/index.vue'
 import '../css/index.css'
 import '../css/left-tabs.css'

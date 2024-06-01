@@ -12,14 +12,12 @@
   flex-wrap: wrap;
   display: flex;
   align-items: center;
-  
   gap: 1rem;
   flex-grow: 1;
 }
 
 .repository {
   width: 100%;
-  min-width: 18rem;
   height: 11.625rem;
   border-radius: 1.25rem;
   background: hsl(244, 13%, 21%);
