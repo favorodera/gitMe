@@ -30,7 +30,13 @@ const fetchGithubInformation = async () => {
 
 <template>
   <form method="get" @submit.prevent="fetchGithubInformation">
-    <input type="text" name="username-input" id="username-input" v-model="USER" placeholder="Input Github Username" />
+    <input
+      type="text"
+      name="username-input"
+      id="username-input"
+      v-model="USER"
+      placeholder="Input Github Username"
+    />
   </form>
   <div class="main-tabs-container">
     <section class="left-tabs-container" v-if="FETCH_STATE === 'Github Info Fetched'">
@@ -140,7 +146,59 @@ const fetchGithubInformation = async () => {
 
     <section class="right-tabs-container">
       <div class="repositories">
-        <div class="repository"></div>
+        <div class="repository">
+          <div class="repository-name-and-folder-icon-container">
+            <img src="../../icons/folder.svg" alt="" />
+            <p>gitMe</p>
+          </div>
+
+          <p class="repository-description">
+            Consulte os códigos de erro que aparecem no painel do veículo Onix.
+          </p>
+
+          <div class="repository-more-info-container">
+            <div class="stars" id="repository-more-info-item">
+              <img src="../../icons/star.svg" alt="" />
+              <p>100</p>
+            </div>
+            <div class="forks" id="repository-more-info-item">
+              <img src="../../icons/fork.svg" alt="" />
+              <p>100</p>
+            </div>
+
+            <div class="repository-main-language" id="repository-more-info-item">
+              <img src="../../icons/code.svg" alt="" />
+              <p>Java</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="repository">
+          <div class="repository-name-and-folder-icon-container">
+            <img src="../../icons/folder.svg" alt="" />
+            <p>gitMe</p>
+          </div>
+
+          <p class="repository-description">
+            Consulte os códigos de erro que aparecem no painel do veículo Onix.
+          </p>
+
+          <div class="repository-more-info-container">
+            <div class="stars" id="repository-more-info-item">
+              <img src="../../icons/star.svg" alt="" />
+              <p>100</p>
+            </div>
+            <div class="forks" id="repository-more-info-item">
+              <img src="../../icons/fork.svg" alt="" />
+              <p>100</p>
+            </div>
+
+            <div class="repository-main-language" id="repository-more-info-item">
+              <img src="../../icons/code.svg" alt="" />
+              <p>Java</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>

@@ -1,0 +1,53 @@
+.right-tabs-container {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+  flex-shrink: 1;
+}
+
+.repositories {
+  max-width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.repository {
+  max-width: 28.8215rem;
+  width: 21.75rem;
+  height: 11.625rem;
+  border-radius: 1.25rem;
+  background: #302f3d;
+  padding: 1rem;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1.38rem;
+  flex-grow: 1;
+}
+
+.repository-name-and-folder-icon-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.repository-description {
+  word-break: break-all;
+}
+
+.repository-more-info-container {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+#repository-more-info-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
