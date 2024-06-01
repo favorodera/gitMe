@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import Skeleton from "./Skeleton.vue"
 
 const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
@@ -40,8 +41,8 @@ const fetchGithubInformation = async () => {
     </div>
 
     <div class="more-info-tab">
-      <div class="location" id="more-info-item">
-        <img src="../../icons/location.svg" alt="" v-show="BIO_DATA.location !== null" />
+      <div class="location" id="more-info-item" v-show="BIO_DATA.location !== null">
+        <img src="../../icons/location.svg" alt=""  />
         <p>{{ BIO_DATA.location }}</p>
       </div>
       <div class="company" id="more-info-item" v-show="BIO_DATA.company !== null">
@@ -83,9 +84,51 @@ const fetchGithubInformation = async () => {
         alt=""
       />
     </div>
+
   </section>
 
-  <section v-else>v</section>
+  <section v-else>
+   <div class="profile-header-tab">
+      <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      <div class="follows">
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+    </div>
+
+    <div class="more-info-tab">
+      <div class="location" id="more-info-item">
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+      <div class="company" id="more-info-item" >
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+      <div class="twitter" id="more-info-item" >
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+      <div class="email" id="more-info-item" >
+       <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+      <div class="github" id="more-info-item">
+       <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+       <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+      <div class="website" id="more-info-item" >
+       <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+        <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+      </div>
+    </div>
+
+    <div class="technologies-tab">
+     <Skeleton :skeletonHeight="8" :skeletonWidth="8" :skeletonRadius="8" />
+    </div>
+  </section>
 
   <section class="right-tabs-container">
     <form method="get" @submit.prevent="fetchGithubInformation">
