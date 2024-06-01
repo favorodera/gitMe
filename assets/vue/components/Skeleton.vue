@@ -2,16 +2,18 @@
 defineProps({
   skeletonHeight: Number,
   skeletonWidth: Number,
-  skeletonRadius: Number
+  skeletonRadius: Number,
+  skeletonMaxWidth: Number
 })
 </script>
 
 <template>
   <div
     :style="{
-      width: skeletonWidth + 'rem',
-      height: skeletonHeight + 'rem',
-      borderRadius: skeletonRadius + 'rem'
+      width: skeletonWidth + '%',
+      height: skeletonHeight + '%',
+      borderRadius: skeletonRadius + 'rem',
+      maxWidth: skeletonMaxWidth + 'rem'
     }"
     class="skeleton"
   ></div>
