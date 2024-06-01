@@ -30,7 +30,7 @@ const fetchGithubInformation = async () => {
 
 <template>
   <form method="get" @submit.prevent="fetchGithubInformation">
-    <input type="text" name="username-input" id="username-input" v-model="USER" />
+    <input type="text" name="username-input" id="username-input" v-model="USER" placeholder="Input Github Username" />
   </form>
   <div class="main-tabs-container">
     <section class="left-tabs-container" v-if="FETCH_STATE === 'Github Info Fetched'">

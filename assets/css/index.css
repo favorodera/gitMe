@@ -68,6 +68,10 @@ input {
   font-weight: 700;
 }
 
+input::placeholder {
+  font-size: 0.97rem;
+}
+
 a {
   text-decoration: none;
   word-break: break-all;
