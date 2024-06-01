@@ -8,7 +8,7 @@
 }
 
 .repositories {
-  max-width: 100%;
+  width: 100%;
   flex-wrap: wrap;
   display: flex;
   align-items: center;
@@ -17,7 +17,6 @@
 }
 
 .repository {
-  max-width: 100%;
   width: 100%;
   height: 11.625rem;
   border-radius: 1.25rem;
@@ -28,6 +27,7 @@
   flex-direction: column;
   gap: 1.38rem;
   flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .repository-name-and-folder-icon-container {

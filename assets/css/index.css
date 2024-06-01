@@ -41,9 +41,8 @@ body {
 
 .main-tabs-container {
   display: flex;
-  gap: 3.75rem;
+  gap: 2rem;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 form {

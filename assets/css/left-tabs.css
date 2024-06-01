@@ -37,6 +37,7 @@
 .name {
   font-size: 1.435rem;
   font-weight: 700;
+  text-align: center;
 }
 
 .bio {
@@ -52,6 +53,7 @@
   justify-content: space-evenly;
   font-weight: 300;
   font-size: 0.8125rem;
+  text-align: center;
 }
 
 .more-info-tab {
@@ -75,6 +77,11 @@
   width: 100%;
   display: flex;
   gap: 1.25rem;
+
+  img {
+    width: 1.5625rem;
+    height: 1.5rem;
+  }
 }
 
 .technologies-tab {
