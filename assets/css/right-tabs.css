@@ -12,12 +12,14 @@
   flex-wrap: wrap;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  
   gap: 1rem;
+  flex-grow: 1;
 }
 
 .repository {
   width: 100%;
+  min-width: 18rem;
   height: 11.625rem;
   border-radius: 1.25rem;
   background: hsl(244, 13%, 21%);
@@ -27,12 +29,16 @@
   flex-direction: column;
   gap: 1.38rem;
   flex-grow: 1;
-  flex-shrink: 1;
 }
 
 .repository-name-and-folder-icon-container {
   display: flex;
   gap: 1rem;
+
+  img {
+    width: 1.3125rem;
+    height: 1.25rem;
+  }
 }
 
 .repository-description {

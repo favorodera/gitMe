@@ -145,60 +145,35 @@ const fetchGithubInformation = async () => {
     </section>
 
     <section class="right-tabs-container">
-      <div class="repositories">
-        <div class="repository">
-          <div class="repository-name-and-folder-icon-container">
-            <img src="../../icons/folder.svg" alt="" />
-            <p>gitMe</p>
-          </div>
-
-          <p class="repository-description">
-            Consulte os códigos de erro que aparecem no painel do veículo Onix.
-          </p>
-
-          <div class="repository-more-info-container">
-            <div class="stars" id="repository-more-info-item">
-              <img src="../../icons/star.svg" alt="" />
-              <p>100</p>
-            </div>
-            <div class="forks" id="repository-more-info-item">
-              <img src="../../icons/fork.svg" alt="" />
-              <p>100</p>
+      <div class="repositories" v-for="repository in REPOS_DATA" :key="repository">
+        <a :href="repository.git_url" target="_blank" rel="noopener noreferrer">
+          <div class="repository">
+            <div class="repository-name-and-folder-icon-container">
+              <img src="../../icons/folder.svg" alt="" />
+              <p>{{ repository.name }}</p>
             </div>
 
-            <div class="repository-main-language" id="repository-more-info-item">
-              <img src="../../icons/code.svg" alt="" />
-              <p>Java</p>
-            </div>
-          </div>
-        </div>
+            <p class="repository-description">
+              {{ repository.description }}
+            </p>
 
-        <div class="repository">
-          <div class="repository-name-and-folder-icon-container">
-            <img src="../../icons/folder.svg" alt="" />
-            <p>gitMe</p>
-          </div>
+            <div class="repository-more-info-container">
+              <div class="stars" id="repository-more-info-item">
+                <img src="../../icons/star.svg" alt="" />
+                <p>{{ repository.stargazers_count }}</p>
+              </div>
+              <div class="forks" id="repository-more-info-item">
+                <img src="../../icons/fork.svg" alt="" />
+                <p>{{ repository.forks_count }}</p>
+              </div>
 
-          <p class="repository-description">
-            Consulte os códigos de erro que aparecem no painel do veículo Onix.
-          </p>
-
-          <div class="repository-more-info-container">
-            <div class="stars" id="repository-more-info-item">
-              <img src="../../icons/star.svg" alt="" />
-              <p>100</p>
-            </div>
-            <div class="forks" id="repository-more-info-item">
-              <img src="../../icons/fork.svg" alt="" />
-              <p>100</p>
-            </div>
-
-            <div class="repository-main-language" id="repository-more-info-item">
-              <img src="../../icons/code.svg" alt="" />
-              <p>Java</p>
+              <div class="repository-main-language" id="repository-more-info-item">
+                <img src="../../icons/code.svg" alt="" />
+                <p>{{ repository.language }}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </section>
   </div>
