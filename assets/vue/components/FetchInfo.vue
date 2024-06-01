@@ -133,7 +133,7 @@ const fetchGithubInformation = async () => {
         </div>
       </div>
 
-      <div class="technologies-tab" style="height: 13rem">
+      <div class="technologies-tab" style="height: 15rem">
         <Skeleton :skeletonHeight="100" :skeletonWidth="100" :skeletonRadius="1.25" />
       </div>
     </section>

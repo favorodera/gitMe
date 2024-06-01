@@ -22,7 +22,7 @@ defineProps({
 <style scoped>
 .skeleton {
   background-color: #1d1c2979;
-  animation: pulse 1.2s 1.2s linear(-0.68 -19.39%, 0.77 43.18%) infinite;
+  animation: pulse 1.2s 1.2s ease-in-out alternate infinite;
 }
 
 @keyframes pulse {
