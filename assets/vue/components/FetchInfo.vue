@@ -42,7 +42,7 @@ const TOTAL_PAGES = computed(() => Math.ceil(REPOS_DATA.value.length / PAGE_SIZE
 const FETCH_STATE = ref(null)
 
 const fetchGithubInformation = async () => {
-  if(FETCH_STATE.value === 'Error Fetching Info, Retrying...') {
+  if (FETCH_STATE.value === 'Error Fetching Info, Retrying...') {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
   }
   FETCH_STATE.value = 'Fetching Info...'
@@ -85,7 +85,7 @@ const goToNextPage = () => {
       placeholder="Input Github Username"
     />
   </form>
-  <p style="text-align: center;" >{{ FETCH_STATE }}</p>
+  <p style="text-align: center">{{ FETCH_STATE }}</p>
   <div class="main-tabs-container">
     <section class="left-tabs-container" v-if="FETCH_STATE === 'Information Fetched ✨'">
       <div class="profile-header-tab">
@@ -135,7 +135,6 @@ const goToNextPage = () => {
           }}</a>
         </div>
       </div>
-
     </section>
 
     <section v-else class="left-tabs-container">
