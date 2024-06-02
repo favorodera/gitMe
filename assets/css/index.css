@@ -62,7 +62,7 @@ html {
   width: 100%;
   max-width: 90rem;
   height: 100%;
-  padding: 0.5rem;
+  padding: 2rem 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -98,6 +98,7 @@ input {
   font-size: 1.25rem;
   color: #837e9f;
   font-weight: 700;
+  text-align: center;
 }
 
 input::placeholder {
