@@ -62,7 +62,7 @@ html {
   width: 100%;
   max-width: 90rem;
   height: 100%;
-  padding: 1rem 1rem 1rem 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -72,11 +72,13 @@ html {
 .main-tabs-container {
   display: flex;
   gap: 2rem;
+  flex: 1 0 auto;
   flex-wrap: wrap;
 }
 
 form {
   width: 100%;
+  min-width: 18.75rem;
   height: 5.35rem;
   background-color: #302f3d;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -107,6 +109,7 @@ input::placeholder {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 1.7rem;
 }
 
 .previous-page-button,

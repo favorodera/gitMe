@@ -1,18 +1,18 @@
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 768px) {
   .main-tabs-container {
     flex-wrap: nowrap;
   }
 
-  .left-tabs-container {
-    max-width: 21.75rem;
+   .left-tabs-container {
+    flex:1 0 21.75rem;
   }
 
-  .right-tabs-container {
+  /* .right-tabs-container {
     width: 59.5rem;
     flex-grow: 1;
-  }
+  } */
 
   .repository {
-    width: 28.8125rem;
-  }
+    flex: 1 1 14rem;
+  } 
 }

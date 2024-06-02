@@ -12,12 +12,12 @@ const CURRENT_PAGE = ref(1)
 
 const handleResize = () => {
   const width = window.innerWidth
-  if (width >= 320 && width <= 425) {
+  if (width >= 320 && width <= 859) {
     PAGE_SIZE.value = 3
-  } else if (width >= 425 && width <= 768) {
-    PAGE_SIZE.value = 4
-  } else if (width >= 768 && width <= 1024) {
-    PAGE_SIZE.value = 5
+  } else if (width >= 860 && width <= 1099) {
+    PAGE_SIZE.value = 6
+  } else if (width >= 1100 && width <= 1339) {
+    PAGE_SIZE.value = 9
   } else {
     PAGE_SIZE.value = 10
   }
@@ -232,7 +232,7 @@ const goToNextPage = () => {
           >
             Previous Page
           </button>
-          <span>Page {{ CURRENT_PAGE }} of {{ TOTAL_PAGES }}</span>
+          <span style="text-align: center">Page {{ CURRENT_PAGE }} of {{ TOTAL_PAGES }}</span>
           <button
             @click="goToNextPage"
             :disabled="CURRENT_PAGE === TOTAL_PAGES"
