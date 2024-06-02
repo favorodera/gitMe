@@ -39,10 +39,13 @@ const PAGINATED_REPOS = computed(() => {
   return REPOS_DATA.value.slice(startIndex, endIndex)
 })
 const TOTAL_PAGES = computed(() => Math.ceil(REPOS_DATA.value.length / PAGE_SIZE.value))
-const FETCH_STATE = ref('Input A Valid Github Username')
+const FETCH_STATE = ref(null)
 
 const fetchGithubInformation = async () => {
-  FETCH_STATE.value = 'Fetching Github Info'
+  if(FETCH_STATE.value === 'Error Fetching Info, Retrying...') {
+    FETCH_STATE.value = 'Error Fetching Info, Retrying...'
+  }
+  FETCH_STATE.value = 'Fetching Info...'
   try {
     const requests = [
       axios.get(`${API_URL.value}/${USER.value}`),
@@ -52,10 +55,10 @@ const fetchGithubInformation = async () => {
     const responses = await Promise.all(requests)
     BIO_DATA.value = responses[0].data
     REPOS_DATA.value = responses[1].data
-    FETCH_STATE.value = 'Github Info Fetched'
-    console.log(BIO_DATA, REPOS_DATA)
+    FETCH_STATE.value = 'Information Fetched ✨'
   } catch (error) {
-    console.log(error)
+    FETCH_STATE.value = 'Error Fetching Info, Retrying...'
+    fetchGithubInformation()
   }
 }
 
@@ -82,8 +85,9 @@ const goToNextPage = () => {
       placeholder="Input Github Username"
     />
   </form>
+  <p style="text-align: center;" >{{ FETCH_STATE }}</p>
   <div class="main-tabs-container">
-    <section class="left-tabs-container" v-if="FETCH_STATE === 'Github Info Fetched'">
+    <section class="left-tabs-container" v-if="FETCH_STATE === 'Information Fetched ✨'">
       <div class="profile-header-tab">
         <div class="profile-image-container"><img :src="BIO_DATA.avatar_url" alt="" /></div>
         <p class="name">{{ BIO_DATA.name }}</p>
@@ -132,12 +136,6 @@ const goToNextPage = () => {
         </div>
       </div>
 
-      <!-- <div class="technologies-tab">
-        <img
-          :src="`https://github-readme-stats.vercel.app/api/top-langs?username=${BIO_DATA.login}&theme=material-palenight&hide_title=false&langs_count=5&hide_border=true&custom_title=Technologies`"
-          alt=""
-        />
-      </div> -->
     </section>
 
     <section v-else class="left-tabs-container">
