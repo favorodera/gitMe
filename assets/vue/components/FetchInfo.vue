@@ -1,12 +1,20 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import axios from 'axios'
 import Skeleton from './Skeleton.vue'
 
 const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
 const BIO_DATA = ref(null)
-const REPOS_DATA = ref(null)
+const REPOS_DATA = ref([])
+const PAGE_SIZE = ref(6)
+const CURRENT_PAGE = ref(1)
+const PAGINATED_REPOS = computed(() => {
+  const startIndex = (CURRENT_PAGE.value - 1) * PAGE_SIZE.value
+  const endIndex = Math.min(startIndex + PAGE_SIZE.value, REPOS_DATA.value.length)
+  return REPOS_DATA.value.slice(startIndex, endIndex)
+})
+const TOTAL_PAGES = computed(() => Math.ceil(REPOS_DATA.value.length / PAGE_SIZE.value))
 const FETCH_STATE = ref('Input A Valid Github Username')
 
 const fetchGithubInformation = async () => {
@@ -24,6 +32,18 @@ const fetchGithubInformation = async () => {
     console.log(BIO_DATA, REPOS_DATA)
   } catch (error) {
     console.log(error)
+  }
+}
+
+const goToPreviousPage = () => {
+  if (CURRENT_PAGE.value > 1) {
+    CURRENT_PAGE.value--
+  }
+}
+
+const goToNextPage = () => {
+  if (CURRENT_PAGE.value < TOTAL_PAGES.value) {
+    CURRENT_PAGE.value++
   }
 }
 </script>
@@ -151,8 +171,8 @@ const fetchGithubInformation = async () => {
           target="_blank"
           rel="noopener noreferrer"
           class="repository"
-          v-for="repository in REPOS_DATA"
-          :key="repository"
+          v-for="repository in PAGINATED_REPOS"
+          :key="repository.id"
         >
           <div class="repository-name-and-folder-icon-container">
             <img src="../../icons/folder.svg" alt="" />
@@ -179,6 +199,24 @@ const fetchGithubInformation = async () => {
             </div>
           </div>
         </a>
+
+        <div class="pagination-buttons-container" v-if="TOTAL_PAGES > 1">
+          <button
+            @click="goToPreviousPage"
+            :disabled="CURRENT_PAGE === 1"
+            class="previous-page-button"
+          >
+            Previous Page
+          </button>
+          <span>Page {{ CURRENT_PAGE }} of {{ TOTAL_PAGES }}</span>
+          <button
+            @click="goToNextPage"
+            :disabled="CURRENT_PAGE === TOTAL_PAGES"
+            class="next-page-button"
+          >
+            Next Page
+          </button>
+        </div>
       </div>
     </section>
   </div>
