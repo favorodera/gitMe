@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
 import Skeleton from './Skeleton.vue'
 
@@ -7,8 +7,32 @@ const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
 const BIO_DATA = ref(null)
 const REPOS_DATA = ref([])
-const PAGE_SIZE = ref(6)
+const PAGE_SIZE = ref(8)
 const CURRENT_PAGE = ref(1)
+
+const handleResize = () => {
+  const width = window.innerWidth
+  if (width >= 320 && width <= 425) {
+    PAGE_SIZE.value = 3
+  } else if (width >= 425 && width <= 768) {
+    PAGE_SIZE.value = 4
+  } else if (width >= 768 && width <= 1024) {
+    PAGE_SIZE.value = 5
+  } else {
+    PAGE_SIZE.value = 10
+  }
+  CURRENT_PAGE.value = 1
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+  handleResize()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
 const PAGINATED_REPOS = computed(() => {
   const startIndex = (CURRENT_PAGE.value - 1) * PAGE_SIZE.value
   const endIndex = Math.min(startIndex + PAGE_SIZE.value, REPOS_DATA.value.length)
@@ -108,12 +132,12 @@ const goToNextPage = () => {
         </div>
       </div>
 
-      <div class="technologies-tab">
+      <!-- <div class="technologies-tab">
         <img
           :src="`https://github-readme-stats.vercel.app/api/top-langs?username=${BIO_DATA.login}&theme=material-palenight&hide_title=false&langs_count=5&hide_border=true&custom_title=Technologies`"
           alt=""
         />
-      </div>
+      </div> -->
     </section>
 
     <section v-else class="left-tabs-container">

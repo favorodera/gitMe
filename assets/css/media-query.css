@@ -1,7 +1,6 @@
 @media only screen and (min-width: 750px) {
   .main-tabs-container {
     flex-wrap: nowrap;
-    height: 60rem;
   }
 
   .left-tabs-container {
@@ -11,10 +10,6 @@
   .right-tabs-container {
     width: 59.5rem;
     flex-grow: 1;
-  }
-  .repositories {
-    overflow-y: auto;
-    height: 100%;
   }
 
   .repository {
