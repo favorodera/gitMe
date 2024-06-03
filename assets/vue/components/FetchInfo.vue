@@ -43,6 +43,7 @@ const PAGINATED_REPOS = computed(() => {
   const endIndex = Math.min(startIndex + PAGE_SIZE.value, REPOS_DATA.value.length)
   return REPOS_DATA.value.slice(startIndex, endIndex)
 })
+
 const TOTAL_PAGES = computed(() => Math.ceil(REPOS_DATA.value.length / PAGE_SIZE.value))
 const FETCH_STATE = ref(null)
 

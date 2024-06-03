@@ -17,7 +17,7 @@ defineProps({
     }"
     class="skeleton"
   >
-  <slot />
+    <slot />
   </div>
 </template>
 
