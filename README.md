@@ -1,57 +1,20 @@
-# gitMe
+# gitMe (Gthub + Me)
 
-This template should help get you started developing with Vue 3 in Vite.
+gitMe is a user-friendly tool that fetches Github user information and repositories.
 
-## Recommended IDE Setup
+###
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+###
+## How Does gitMe Work?
+ Simply provide a GitHub username and gitMe will fetch and display:
+###
+* **Comprehensive User Profile:** Get a quick overview of the user's bio, public contributions, and other details.
+* **Streamlined Repository List:** Explore the user's public repositories with ease. See their names, descriptions, and links to delve deeper.
+###
 
-## Customize configuration
+###
+## gitMe Simplifies Your Workflow By:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+* **Saving You Time:** Skip the manual search and get everything in one place.
+* **Enhancing Efficiency:** Focus on what matters, analyzing user profiles and repositories.
 
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-pnpm test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-pnpm test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-pnpm build
-pnpm test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
