@@ -120,7 +120,7 @@ const goToNextPage = () => {
         <div class="twitter" id="more-info-item" v-show="BIO_DATA.twitter_username !== null">
           <img src="../../icons/twitter.svg" alt="" />
           <a
-            :href="`twitter.com/${BIO_DATA.twitter_username}`"
+            :href="`https://twitter.com/${BIO_DATA.twitter_username}`"
             target="_blank"
             rel="noopener noreferrer"
             >{{ BIO_DATA.twitter_username }}</a
