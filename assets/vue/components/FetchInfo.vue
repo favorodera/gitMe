@@ -9,28 +9,33 @@ const BIO_DATA = ref(null)
 const REPOS_DATA = ref([])
 const PAGE_SIZE = ref(8)
 const CURRENT_PAGE = ref(1)
+const NUMBER_OF_REPO_SKELETON = ref(0)
 
-const handleResize = () => {
+const resize = () => {
   const width = window.innerWidth
   if (width >= 320 && width <= 859) {
     PAGE_SIZE.value = 3
+    NUMBER_OF_REPO_SKELETON.value = 3
   } else if (width >= 860 && width <= 1099) {
     PAGE_SIZE.value = 6
+    NUMBER_OF_REPO_SKELETON.value = 6
   } else if (width >= 1100 && width <= 1339) {
     PAGE_SIZE.value = 9
+    NUMBER_OF_REPO_SKELETON.value = 9
   } else {
     PAGE_SIZE.value = 10
+    NUMBER_OF_REPO_SKELETON.value = 10
   }
   CURRENT_PAGE.value = 1
 }
 
 onMounted(() => {
-  window.addEventListener('resize', handleResize)
-  handleResize()
+  window.addEventListener('resize', resize)
+  resize()
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  window.removeEventListener('resize', resize)
 })
 
 const PAGINATED_REPOS = computed(() => {
@@ -44,8 +49,10 @@ const FETCH_STATE = ref(null)
 const fetchGithubInformation = async () => {
   if (FETCH_STATE.value === 'Error Fetching Info, Retrying...') {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
+  } else {
+    FETCH_STATE.value = 'Fetching Info...'
   }
-  FETCH_STATE.value = 'Fetching Info...'
+
   try {
     const requests = [
       axios.get(`${API_URL.value}/${USER.value}`),
@@ -85,9 +92,11 @@ const goToNextPage = () => {
       placeholder="Input Github Username"
     />
   </form>
+
   <p style="text-align: center">{{ FETCH_STATE }}</p>
-  <div class="main-tabs-container">
-    <section class="left-tabs-container" v-if="FETCH_STATE === 'Information Fetched ✨'">
+
+  <div class="main-tabs-container" v-if="FETCH_STATE === 'Information Fetched ✨'">
+    <section class="left-tabs-container">
       <div class="profile-header-tab">
         <div class="profile-image-container"><img :src="BIO_DATA.avatar_url" alt="" /></div>
         <p class="name">{{ BIO_DATA.name }}</p>
@@ -134,54 +143,6 @@ const goToNextPage = () => {
             BIO_DATA.blog
           }}</a>
         </div>
-      </div>
-    </section>
-
-    <section v-else class="left-tabs-container">
-      <div class="profile-header-tab">
-        <Skeleton
-          :skeletonHeight="45"
-          :skeletonWidth="55"
-          :skeletonRadius="100"
-          :skeletonMaxWidth="8"
-        />
-        <Skeleton :skeletonHeight="10" :skeletonWidth="80" :skeletonRadius="0.5" />
-        <Skeleton :skeletonHeight="20" :skeletonWidth="80" :skeletonRadius="0.5" />
-        <div class="follows" style="height: 2rem">
-          <Skeleton :skeletonHeight="50" :skeletonWidth="40" :skeletonRadius="0.5" />
-          <Skeleton :skeletonHeight="50" :skeletonWidth="40" :skeletonRadius="0.5" />
-        </div>
-      </div>
-
-      <div class="more-info-tab">
-        <div class="location" id="more-info-item" style="height: 1.5rem">
-          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="0.5" />
-          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
-        </div>
-        <div class="company" id="more-info-item" style="height: 1.5rem">
-          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="0.5" />
-          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
-        </div>
-        <div class="twitter" id="more-info-item" style="height: 1.5rem">
-          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="0.5" />
-          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
-        </div>
-        <div class="email" id="more-info-item" style="height: 1.5rem">
-          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="8" />
-          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
-        </div>
-        <div class="github" id="more-info-item" style="height: 1.5rem">
-          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="8" />
-          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
-        </div>
-        <div class="website" id="more-info-item" style="height: 1.5rem">
-          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="8" />
-          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
-        </div>
-      </div>
-
-      <div class="technologies-tab" style="height: 15rem">
-        <Skeleton :skeletonHeight="100" :skeletonWidth="100" :skeletonRadius="1.25" />
       </div>
     </section>
 
@@ -237,6 +198,77 @@ const goToNextPage = () => {
           >
             Next Page
           </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SKELETONS -->
+  <div class="main-tabs-container" v-else>
+    <section class="left-tabs-container">
+      <div class="profile-header-tab">
+        <Skeleton
+          :skeletonHeight="45"
+          :skeletonWidth="55"
+          :skeletonRadius="100"
+          :skeletonMaxWidth="8"
+        />
+        <Skeleton :skeletonHeight="10" :skeletonWidth="80" :skeletonRadius="0.5" />
+        <Skeleton :skeletonHeight="20" :skeletonWidth="80" :skeletonRadius="0.5" />
+        <div class="follows" style="height: 2rem">
+          <Skeleton :skeletonHeight="50" :skeletonWidth="40" :skeletonRadius="0.5" />
+          <Skeleton :skeletonHeight="50" :skeletonWidth="40" :skeletonRadius="0.5" />
+        </div>
+      </div>
+
+      <div class="more-info-tab" style="flex: 1 0 auto">
+        <div class="location" id="more-info-item" style="height: 1.5rem">
+          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="0.5" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
+        </div>
+        <div class="company" id="more-info-item" style="height: 1.5rem">
+          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="0.5" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
+        </div>
+        <div class="twitter" id="more-info-item" style="height: 1.5rem">
+          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="0.5" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
+        </div>
+        <div class="email" id="more-info-item" style="height: 1.5rem">
+          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="8" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
+        </div>
+        <div class="github" id="more-info-item" style="height: 1.5rem">
+          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="8" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
+        </div>
+        <div class="website" id="more-info-item" style="height: 1.5rem">
+          <Skeleton :skeletonHeight="100" :skeletonWidth="10" :skeletonRadius="8" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="8" />
+        </div>
+      </div>
+    </section>
+
+    <section class="right-tabs-container">
+      <div class="repositories">
+        <div
+          class="repository"
+          style="height: 15rem; width: 100%"
+          v-for="repositorySkeleton in NUMBER_OF_REPO_SKELETON"
+          :key="repositorySkeleton"
+        >
+          <div class="repository-name-and-folder-icon-container" style="height: 20%; width: 100%">
+            <Skeleton :skeletonHeight="100" :skeletonWidth="20" :skeletonRadius="0.5" />
+            <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="0.5" />
+          </div>
+
+          <Skeleton :skeletonHeight="60" :skeletonWidth="100" :skeletonRadius="0.5" />
+
+          <div class="repository-more-info-container" style="height: 20%; width: 100%">
+            <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
+            <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
+            <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
+          </div>
         </div>
       </div>
     </section>

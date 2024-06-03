@@ -16,7 +16,9 @@ defineProps({
       maxWidth: skeletonMaxWidth + 'rem'
     }"
     class="skeleton"
-  ></div>
+  >
+  <slot />
+  </div>
 </template>
 
 <style scoped>
