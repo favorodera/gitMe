@@ -64,6 +64,7 @@ const fetchGithubInformation = async () => {
     BIO_DATA.value = responses[0].data
     REPOS_DATA.value = responses[1].data
     FETCH_STATE.value = 'Information Fetched ✨'
+    console.log(REPOS_DATA);
   } catch (error) {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
     fetchGithubInformation()
@@ -150,7 +151,7 @@ const goToNextPage = () => {
     <section class="right-tabs-container">
       <div class="repositories">
         <a
-          :href="repository.git_url"
+          :href="repository.html_url"
           target="_blank"
           rel="noopener noreferrer"
           class="repository"
