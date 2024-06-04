@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
 import Skeleton from './Skeleton.vue'
+import { RouterLink, useRouter } from 'vue-router'
 
 const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
@@ -81,6 +82,21 @@ const goToNextPage = () => {
     CURRENT_PAGE.value++
   }
 }
+
+const router = useRouter()
+
+const IS_REPO_POPUP_VISIBLE = ref(false)
+const SELECTED_REPOSITORY_POPUP_DETAILS = ref(null)
+
+const showRepoPopup = (repositoryDetails) => {
+  SELECTED_REPOSITORY_POPUP_DETAILS.value = repositoryDetails
+  IS_REPO_POPUP_VISIBLE.value = true
+}
+
+const closeRepoPopup = () => {
+  IS_REPO_POPUP_VISIBLE.value = false
+  SELECTED_REPOSITORY_POPUP_DETAILS.value = null
+}
 </script>
 
 <template>
@@ -149,13 +165,12 @@ const goToNextPage = () => {
 
     <section class="right-tabs-container">
       <div class="repositories">
-        <a
-          :href="repository.html_url"
-          target="_blank"
-          rel="noopener noreferrer"
+        <RouterLink
+          :to="{ name: 'repository-details', params: { repositoryName: repository.name, repositoryOwner: BIO_DATA.login } }"
           class="repository"
           v-for="repository in PAGINATED_REPOS"
           :key="repository.id"
+          @click="showRepoPopup(repository)"
         >
           <div class="repository-name-and-folder-icon-container">
             <img src="../../icons/folder.svg" alt="" />
@@ -181,7 +196,7 @@ const goToNextPage = () => {
               <p>{{ repository.language }}</p>
             </div>
           </div>
-        </a>
+        </RouterLink>
 
         <div class="pagination-buttons-container" v-if="TOTAL_PAGES > 1">
           <button
@@ -202,6 +217,15 @@ const goToNextPage = () => {
         </div>
       </div>
     </section>
+
+    <div v-if="IS_REPO_POPUP_VISIBLE" >
+      <div >
+        <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.forks_count }}</p>
+        <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.name }}</p>
+        <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.language }}</p>
+        <button @click="closeRepoPopup">x</button>
+      </div>
+    </div>
   </div>
 
   <!-- SKELETONS -->
