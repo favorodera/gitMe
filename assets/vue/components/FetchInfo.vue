@@ -64,7 +64,6 @@ const fetchGithubInformation = async () => {
     BIO_DATA.value = responses[0].data
     REPOS_DATA.value = responses[1].data
     FETCH_STATE.value = 'Information Fetched ✨'
-    console.log(REPOS_DATA);
   } catch (error) {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
     fetchGithubInformation()
