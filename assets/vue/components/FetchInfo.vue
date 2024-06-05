@@ -42,14 +42,14 @@ const fetchGithubInformation = async () => {
   try {
     const requests = [
       axios.get(`${API_URL.value}/${USER.value}`),
-      axios.get(`${API_URL.value}/${USER.value}/repos`)
+      axios.get(`${API_URL.value}/${USER.value}/repos?per_page=100&sort=updated`)
     ]
 
     const responses = await Promise.all(requests)
+
     BIO_DATA.value = responses[0].data
     REPOS_DATA.value = responses[1].data
     FETCH_STATE.value = 'Information Fetched ✨'
-    console.log(REPOS_DATA.value)
   } catch (error) {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
     fetchGithubInformation()
