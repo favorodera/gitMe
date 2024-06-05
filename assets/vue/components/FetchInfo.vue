@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
 import Skeleton from './Skeleton.vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter  } from 'vue-router'
 
 const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
@@ -14,6 +14,7 @@ const NUMBER_OF_REPO_SKELETON = ref(0)
 const IS_REPO_POPUP_VISIBLE = ref(false)
 const SELECTED_REPOSITORY_POPUP_DETAILS = ref(null)
 const FETCH_STATE = ref('Awaiting Input...')
+const router = useRouter()
 
 const PAGINATED_REPOS = computed(() => {
   const startIndex = (CURRENT_PAGE.value - 1) * PAGE_SIZE.value
@@ -46,7 +47,7 @@ const fetchGithubInformation = async () => {
 
     while (hasMorePages) {
       const requests = [
-        axios.get(`${API_URL.value}/${USER.value}/repos?per_page=100&page=${currentPage}`),
+        axios.get(`${API_URL.value}/${USER.value}/repos?per_page=100&sort='updated'&page=${currentPage}`),
         axios.get(`${API_URL.value}/${USER.value}`)
       ]
 
