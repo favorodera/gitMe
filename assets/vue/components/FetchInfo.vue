@@ -13,7 +13,7 @@ const CURRENT_PAGE = ref(1)
 const NUMBER_OF_REPO_SKELETON = ref(0)
 const IS_REPO_POPUP_VISIBLE = ref(false)
 const SELECTED_REPOSITORY_POPUP_DETAILS = ref(null)
-const FETCH_STATE = ref(null)
+const FETCH_STATE = ref('Awaiting Input...')
 
 const PAGINATED_REPOS = computed(() => {
   const startIndex = (CURRENT_PAGE.value - 1) * PAGE_SIZE.value
@@ -240,14 +240,13 @@ const closeRepoPopup = () => {
         </div>
       </div>
 
-      <div style="width: 100%; display: flex; flex-direction: column; gap: 0.2rem">
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 0.5rem">
         <a
           :href="SELECTED_REPOSITORY_POPUP_DETAILS.html_url"
           target="_blank"
           rel="noopener noreferrer"
           class="view-repository-link"
         >
-          <div><img src="../../icons/github.svg" alt="" /></div>
           <p>View Repository</p>
         </a>
         <a
@@ -257,8 +256,7 @@ const closeRepoPopup = () => {
           class="view-live-link"
           v-show="SELECTED_REPOSITORY_POPUP_DETAILS.homepage !== null"
         >
-          <div><img src="../../icons/website.svg" alt="" /></div>
-          <p>View Live</p>
+          <p>View Live Site</p>
         </a>
       </div>
       <button @click="closeRepoPopup" class="repository-popup-close-button">

@@ -1,6 +1,6 @@
 .repository-popup-container {
-  min-width: 19rem;
-  max-width: 50%;
+  width: 95%;
+  max-width: 75rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -18,6 +18,7 @@
   gap: 1rem;
   align-items: center;
   justify-content: space-around;
+  border: 0.065rem solid #837e9f;
 }
 
 .repository-more-info-container {
@@ -37,6 +38,7 @@
   border-radius: 1rem;
   width: max-content;
   flex: 1 0 auto;
+  height: 3rem;
 }
 
 .repository-more-info-item-tittle-and-icon-container {
@@ -49,28 +51,21 @@
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   font-weight: 700;
   padding: 0.5rem;
   height: 3rem;
+  gap: 1rem;
   border: 0.1rem solid;
   box-shadow: 0.125rem 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
-
-  p {
-    width: 100%;
-  }
-
-  div {
-    width: 50%;
-  }
 }
 
 .repository-popup-close-button {
   position: absolute;
-  top: -15%;
+  top: 105%;
   cursor: pointer;
-  left: 91%;
+  left: auto;
   background: none;
   border: none;
   padding: 0.1rem;
