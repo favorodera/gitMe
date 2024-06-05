@@ -38,17 +38,30 @@ const fetchGithubInformation = async () => {
   } else {
     FETCH_STATE.value = 'Fetching Info...'
   }
-
   try {
-    const requests = [
-      axios.get(`${API_URL.value}/${USER.value}`),
-      axios.get(`${API_URL.value}/${USER.value}/repos?per_page=100&sort=updated`)
-    ]
+    REPOS_DATA.value = []
 
-    const responses = await Promise.all(requests)
+    let currentPage = 1
+    let hasMorePages = true
 
-    BIO_DATA.value = responses[0].data
-    REPOS_DATA.value = responses[1].data
+    while (hasMorePages) {
+      const requests = [
+        axios.get(`${API_URL.value}/${USER.value}/repos?per_page=100&page=${currentPage}`),
+        axios.get(`${API_URL.value}/${USER.value}`)
+      ]
+
+      const [reposResponse, bioResponse] = await Promise.all(requests)
+
+      if (reposResponse.data.length === 0) {
+        hasMorePages = false
+      } else {
+        REPOS_DATA.value = REPOS_DATA.value.concat(reposResponse.data)
+        currentPage++
+      }
+
+      BIO_DATA.value = bioResponse.data
+    }
+
     FETCH_STATE.value = 'Information Fetched ✨'
   } catch (error) {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
