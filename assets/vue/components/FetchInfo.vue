@@ -65,6 +65,7 @@ const fetchGithubInformation = async () => {
     BIO_DATA.value = responses[0].data
     REPOS_DATA.value = responses[1].data
     FETCH_STATE.value = 'Information Fetched ✨'
+    console.log(REPOS_DATA.value);
   } catch (error) {
     FETCH_STATE.value = 'Error Fetching Info, Retrying...'
     fetchGithubInformation()
@@ -166,7 +167,10 @@ const closeRepoPopup = () => {
     <section class="right-tabs-container">
       <div class="repositories">
         <RouterLink
-          :to="{ name: 'repository-details', params: { repositoryName: repository.name, repositoryOwner: BIO_DATA.login } }"
+          :to="{
+            name: 'repository-details',
+            params: { repositoryName: repository.name, repositoryOwner: BIO_DATA.login }
+          }"
           class="repository"
           v-for="repository in PAGINATED_REPOS"
           :key="repository.id"
@@ -180,22 +184,6 @@ const closeRepoPopup = () => {
           <p class="repository-description">
             {{ repository.description }}
           </p>
-
-          <div class="repository-more-info-container">
-            <div class="stars" id="repository-more-info-item">
-              <img src="../../icons/star.svg" alt="" />
-              <p>{{ repository.stargazers_count }}</p>
-            </div>
-            <div class="forks" id="repository-more-info-item">
-              <img src="../../icons/fork.svg" alt="" />
-              <p>{{ repository.forks_count }}</p>
-            </div>
-
-            <div class="repository-main-language" id="repository-more-info-item">
-              <img src="../../icons/code.svg" alt="" />
-              <p>{{ repository.language }}</p>
-            </div>
-          </div>
         </RouterLink>
 
         <div class="pagination-buttons-container" v-if="TOTAL_PAGES > 1">
@@ -218,13 +206,43 @@ const closeRepoPopup = () => {
       </div>
     </section>
 
-    <div v-if="IS_REPO_POPUP_VISIBLE" >
-      <div >
-        <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.forks_count }}</p>
-        <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.name }}</p>
-        <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.language }}</p>
-        <button @click="closeRepoPopup">x</button>
+    <div v-if="IS_REPO_POPUP_VISIBLE" class="repository-popup-container">
+      <div class="repository-more-info-container">
+        <div class="stars" id="repository-more-info-item">
+          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/star.svg" alt="" /> <p>Stars:</p></div>
+          <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.stargazers_count }}</p>
+        </div>
+        <div class="forks" id="repository-more-info-item">
+          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/fork.svg" alt="" /> <p>Forks:</p></div>
+          
+          <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.forks_count }}</p>
+        </div>
+
+        <div class="repository-main-language" id="repository-more-info-item">
+          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/code.svg" alt="" /> <p>Language:</p></div>
+          
+          <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.language }}</p>
+        </div>
+
+        <div class="repository-watchers" id="repository-more-info-item">
+          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/eye.svg" alt="" /> <p>Watchers:</p></div>
+          
+          <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.watchers }}</p>
+        </div>
+
       </div>
+
+      <a :href="SELECTED_REPOSITORY_POPUP_DETAILS.html_url" target="_blank" rel="noopener noreferrer" class="view-repository-link"
+        ><img src="../../icons/github.svg" alt="" />
+        <p>View Repository</p></a
+      >
+      <a :href="SELECTED_REPOSITORY_POPUP_DETAILS.homepage" target="_blank" rel="noopener noreferrer" class="view-live-link" v-show="SELECTED_REPOSITORY_POPUP_DETAILS.homepage !== null"
+        ><img src="../../icons/website.svg" alt="" />
+        <p>View Live</p></a
+      >
+      <!-- <button @click="closeRepoPopup" class="repository-popup-close-button">
+        <img src="../../icons/close.svg" alt="" />
+      </button> -->
     </div>
   </div>
 

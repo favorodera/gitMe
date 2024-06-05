@@ -1,2 +1,77 @@
 
+.repository-popup-container {
+  min-width: 19rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #302F3D;
+  box-shadow: 0.125rem 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  margin:  0 auto;
+  height: 15rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.repository-more-info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#repository-more-info-item {
+  display: flex;
+  gap: 0.2rem;
+  box-shadow: 0.125rem 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.2);
+  align-items: center;
+  padding: 0.5rem;
+ border: none;
+ border-radius: 1rem;
+  width: max-content;
+  flex: 1 0 auto;
+  
+}
+
+.repository-more-info-item-tittle-and-icon-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+
+.view-repository-link, .view-live-link {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 2rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  height: 2rem;
+  box-shadow: 0.125rem 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+
+  > p {
+    text-align: center;
+  }
+}
+
+.repository-popup-close-button {
+  position: absolute;
+  top: -30%;
+  cursor: pointer;
+  left: 99%;
+  background-color: #383841;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
