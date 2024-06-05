@@ -30,6 +30,11 @@
   flex: 1 0 auto;
 }
 
+.repository:hover{
+  text-decoration: none;
+  box-shadow: 0.125rem 0.125rem 0.125rem 0.0625rem rgba(158, 105, 175, 0.342);
+}
+
 .repository-name-and-folder-icon-container {
   display: flex;
   gap: 1rem;

@@ -3,11 +3,11 @@
     flex-wrap: nowrap;
   }
 
-   .left-tabs-container {
-    flex:1 0 21.75rem;
+  .left-tabs-container {
+    flex: 1 0 21.75rem;
   }
 
   .repository {
     flex: 1 1 14rem;
-  } 
+  }
 }

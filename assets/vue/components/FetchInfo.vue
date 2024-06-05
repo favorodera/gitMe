@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import axios from 'axios'
 import Skeleton from './Skeleton.vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 
 const API_URL = ref('https://api.github.com/users')
 const USER = ref(null)
@@ -11,6 +11,50 @@ const REPOS_DATA = ref([])
 const PAGE_SIZE = ref(8)
 const CURRENT_PAGE = ref(1)
 const NUMBER_OF_REPO_SKELETON = ref(0)
+const IS_REPO_POPUP_VISIBLE = ref(false)
+const SELECTED_REPOSITORY_POPUP_DETAILS = ref(null)
+const FETCH_STATE = ref(null)
+
+const PAGINATED_REPOS = computed(() => {
+  const startIndex = (CURRENT_PAGE.value - 1) * PAGE_SIZE.value
+  const endIndex = Math.min(startIndex + PAGE_SIZE.value, REPOS_DATA.value.length)
+  return REPOS_DATA.value.slice(startIndex, endIndex)
+})
+
+const TOTAL_PAGES = computed(() => Math.ceil(REPOS_DATA.value.length / PAGE_SIZE.value))
+
+onMounted(() => {
+  window.addEventListener('resize', resize)
+  resize()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resize)
+})
+
+const fetchGithubInformation = async () => {
+  if (FETCH_STATE.value === 'Error Fetching Info, Retrying...') {
+    FETCH_STATE.value = 'Error Fetching Info, Retrying...'
+  } else {
+    FETCH_STATE.value = 'Fetching Info...'
+  }
+
+  try {
+    const requests = [
+      axios.get(`${API_URL.value}/${USER.value}`),
+      axios.get(`${API_URL.value}/${USER.value}/repos`)
+    ]
+
+    const responses = await Promise.all(requests)
+    BIO_DATA.value = responses[0].data
+    REPOS_DATA.value = responses[1].data
+    FETCH_STATE.value = 'Information Fetched ✨'
+    console.log(REPOS_DATA.value)
+  } catch (error) {
+    FETCH_STATE.value = 'Error Fetching Info, Retrying...'
+    fetchGithubInformation()
+  }
+}
 
 const resize = () => {
   const width = window.innerWidth
@@ -30,48 +74,6 @@ const resize = () => {
   CURRENT_PAGE.value = 1
 }
 
-onMounted(() => {
-  window.addEventListener('resize', resize)
-  resize()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', resize)
-})
-
-const PAGINATED_REPOS = computed(() => {
-  const startIndex = (CURRENT_PAGE.value - 1) * PAGE_SIZE.value
-  const endIndex = Math.min(startIndex + PAGE_SIZE.value, REPOS_DATA.value.length)
-  return REPOS_DATA.value.slice(startIndex, endIndex)
-})
-
-const TOTAL_PAGES = computed(() => Math.ceil(REPOS_DATA.value.length / PAGE_SIZE.value))
-const FETCH_STATE = ref(null)
-
-const fetchGithubInformation = async () => {
-  if (FETCH_STATE.value === 'Error Fetching Info, Retrying...') {
-    FETCH_STATE.value = 'Error Fetching Info, Retrying...'
-  } else {
-    FETCH_STATE.value = 'Fetching Info...'
-  }
-
-  try {
-    const requests = [
-      axios.get(`${API_URL.value}/${USER.value}`),
-      axios.get(`${API_URL.value}/${USER.value}/repos`)
-    ]
-
-    const responses = await Promise.all(requests)
-    BIO_DATA.value = responses[0].data
-    REPOS_DATA.value = responses[1].data
-    FETCH_STATE.value = 'Information Fetched ✨'
-    console.log(REPOS_DATA.value);
-  } catch (error) {
-    FETCH_STATE.value = 'Error Fetching Info, Retrying...'
-    fetchGithubInformation()
-  }
-}
-
 const goToPreviousPage = () => {
   if (CURRENT_PAGE.value > 1) {
     CURRENT_PAGE.value--
@@ -83,11 +85,6 @@ const goToNextPage = () => {
     CURRENT_PAGE.value++
   }
 }
-
-const router = useRouter()
-
-const IS_REPO_POPUP_VISIBLE = ref(false)
-const SELECTED_REPOSITORY_POPUP_DETAILS = ref(null)
 
 const showRepoPopup = (repositoryDetails) => {
   SELECTED_REPOSITORY_POPUP_DETAILS.value = repositoryDetails
@@ -114,7 +111,7 @@ const closeRepoPopup = () => {
   <p style="text-align: center">{{ FETCH_STATE }}</p>
 
   <div class="main-tabs-container" v-if="FETCH_STATE === 'Information Fetched ✨'">
-    <section class="left-tabs-container">
+    <section class="left-tabs-container" :aria-hidden="IS_REPO_POPUP_VISIBLE">
       <div class="profile-header-tab">
         <div class="profile-image-container"><img :src="BIO_DATA.avatar_url" alt="" /></div>
         <p class="name">{{ BIO_DATA.name }}</p>
@@ -164,7 +161,7 @@ const closeRepoPopup = () => {
       </div>
     </section>
 
-    <section class="right-tabs-container">
+    <section class="right-tabs-container" :aria-hidden="IS_REPO_POPUP_VISIBLE">
       <div class="repositories">
         <RouterLink
           :to="{
@@ -209,40 +206,64 @@ const closeRepoPopup = () => {
     <div v-if="IS_REPO_POPUP_VISIBLE" class="repository-popup-container">
       <div class="repository-more-info-container">
         <div class="stars" id="repository-more-info-item">
-          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/star.svg" alt="" /> <p>Stars:</p></div>
+          <div class="repository-more-info-item-tittle-and-icon-container">
+            <img src="../../icons/star.svg" alt="" />
+            <p>Stars:</p>
+          </div>
           <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.stargazers_count }}</p>
         </div>
         <div class="forks" id="repository-more-info-item">
-          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/fork.svg" alt="" /> <p>Forks:</p></div>
-          
+          <div class="repository-more-info-item-tittle-and-icon-container">
+            <img src="../../icons/fork.svg" alt="" />
+            <p>Forks:</p>
+          </div>
+
           <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.forks_count }}</p>
         </div>
 
         <div class="repository-main-language" id="repository-more-info-item">
-          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/code.svg" alt="" /> <p>Language:</p></div>
-          
+          <div class="repository-more-info-item-tittle-and-icon-container">
+            <img src="../../icons/code.svg" alt="" />
+            <p>Language:</p>
+          </div>
+
           <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.language }}</p>
         </div>
 
         <div class="repository-watchers" id="repository-more-info-item">
-          <div class="repository-more-info-item-tittle-and-icon-container" ><img src="../../icons/eye.svg" alt="" /> <p>Watchers:</p></div>
-          
+          <div class="repository-more-info-item-tittle-and-icon-container">
+            <img src="../../icons/eye.svg" alt="" />
+            <p>Watchers:</p>
+          </div>
+
           <p>{{ SELECTED_REPOSITORY_POPUP_DETAILS.watchers }}</p>
         </div>
-
       </div>
 
-      <a :href="SELECTED_REPOSITORY_POPUP_DETAILS.html_url" target="_blank" rel="noopener noreferrer" class="view-repository-link"
-        ><img src="../../icons/github.svg" alt="" />
-        <p>View Repository</p></a
-      >
-      <a :href="SELECTED_REPOSITORY_POPUP_DETAILS.homepage" target="_blank" rel="noopener noreferrer" class="view-live-link" v-show="SELECTED_REPOSITORY_POPUP_DETAILS.homepage !== null"
-        ><img src="../../icons/website.svg" alt="" />
-        <p>View Live</p></a
-      >
-      <!-- <button @click="closeRepoPopup" class="repository-popup-close-button">
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 0.2rem">
+        <a
+          :href="SELECTED_REPOSITORY_POPUP_DETAILS.html_url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="view-repository-link"
+        >
+          <div><img src="../../icons/github.svg" alt="" /></div>
+          <p>View Repository</p>
+        </a>
+        <a
+          :href="SELECTED_REPOSITORY_POPUP_DETAILS.homepage"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="view-live-link"
+          v-show="SELECTED_REPOSITORY_POPUP_DETAILS.homepage !== null"
+        >
+          <div><img src="../../icons/website.svg" alt="" /></div>
+          <p>View Live</p>
+        </a>
+      </div>
+      <button @click="closeRepoPopup" class="repository-popup-close-button">
         <img src="../../icons/close.svg" alt="" />
-      </button> -->
+      </button>
     </div>
   </div>
 
@@ -308,7 +329,6 @@ const closeRepoPopup = () => {
           <Skeleton :skeletonHeight="60" :skeletonWidth="100" :skeletonRadius="0.5" />
 
           <div class="repository-more-info-container" style="height: 20%; width: 100%">
-            <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
             <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
             <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
           </div>

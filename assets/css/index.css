@@ -137,3 +137,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.left-tabs-container[aria-hidden='true'],
+.right-tabs-container[aria-hidden='true'] {
+  filter: blur(0.3rem);
+  pointer-events: none;
+}
