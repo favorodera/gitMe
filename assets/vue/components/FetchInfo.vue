@@ -338,12 +338,8 @@ const closeRepoPopup = () => {
             <Skeleton :skeletonHeight="100" :skeletonWidth="80" :skeletonRadius="0.5" />
           </div>
 
-          <Skeleton :skeletonHeight="60" :skeletonWidth="100" :skeletonRadius="0.5" />
+          <Skeleton :skeletonHeight="100" :skeletonWidth="100" :skeletonRadius="0.5" />
 
-          <div class="repository-more-info-container" style="height: 20%; width: 100%">
-            <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
-            <Skeleton :skeletonHeight="100" :skeletonWidth="33" :skeletonRadius="0.5" />
-          </div>
         </div>
       </div>
     </section>
